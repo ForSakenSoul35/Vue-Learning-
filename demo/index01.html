@@ -5,11 +5,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>hello vue</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-  <script src="main.js"></script> -->
+  <!-- 引入vue文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
 <body>
-    
+    <!-- 
+      vue兼容性：不支持ie8以下版本  因为使用了es6特性
+
+     -->
+     <div id="app">{{content}}</div>
+     <!-- 插值表达式 {{ }} -->
+     <script>
+      //  创建一个vue实例
+      var vue = new Vue({
+        el:'#app',
+        // 实例负责管理的区域
+        data:{
+          // 定义一些数据
+          content:'hello Vue'
+        }
+      })
+      setTimeout(function(){
+        app.$data.content = 'hello  world'
+      },2000);
+     </script>
 </body>
 </html>
