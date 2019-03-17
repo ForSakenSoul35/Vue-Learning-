@@ -25,8 +25,9 @@
           循环list中的每一项 并把每一项都放在item中
          -->
          <!-- <li v-for="item in list" v-on:click="handleItemClick(index)">{{item}}</li> -->
-         <todo-item v-for="item in list"></todo-item>
+         <todo-item v-bind:content = "item"  v-bind:index ="index" v-for="(item,index) in list" v-on:delete="handleItemDelete"></todo-item>
          <!-- 命名结构？ -->
+         <!-- v-bind 可以简写为: -->
       </ul>
     </div>
     <script>
@@ -39,12 +40,28 @@
     
     */
 
-    Vue.component("TodoItem",{
-      template:"<li>todo item</li>"
-    });
-
+    // Vue.component("TodoItem",{
+    //   // 定义全局组件
+    //   props:['content'],
+    //   template:"<li>{{content}}</li>"
+    // });
+    var TodoItem = {
+      // v-on：click 可以简写为 @click
+      props:['content','index'],
+      template:"<li v-on:click = 'handleItemClick'>{{content}}</li>",
+      methods:{
+        handleItemClick:function(){
+          this.$emit("delete",this.index)
+        }
+      }
+    }
     var app = new Vue({
       el:'#app',
+      components:{
+        // 子组件
+        TodoItem : TodoItem
+        
+      },
       data:{
         list:[],
         inputValue:''
@@ -53,6 +70,9 @@
         handleBtnClick:function(){
           this.list.push(this.inputValue);
           this.inputValue = '';        
+        },
+        handleItemDelete:function(index){
+          this.list.splice(index,1);
         }
       }
     })
