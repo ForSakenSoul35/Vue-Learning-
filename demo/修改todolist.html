@@ -24,7 +24,9 @@
           v-for = "item in list"
           循环list中的每一项 并把每一项都放在item中
          -->
-         <li v-for="item in list" v-on:click="handleItemClick(index)">{{item}}</li>
+         <!-- <li v-for="item in list" v-on:click="handleItemClick(index)">{{item}}</li> -->
+         <todo-item v-for="item in list"></todo-item>
+         <!-- 命名结构？ -->
       </ul>
     </div>
     <script>
@@ -36,6 +38,11 @@
       
     
     */
+
+    Vue.component("TodoItem",{
+      template:"<li>todo item</li>"
+    });
+
     var app = new Vue({
       el:'#app',
       data:{
@@ -46,26 +53,9 @@
         handleBtnClick:function(){
           this.list.push(this.inputValue);
           this.inputValue = '';        
-        },
-        handleItemClick:function(index){
-          console.log(index)
         }
       }
     })
     </script>
 </body>
 </html>
-<!-- 
-  设计模式：
-  MVP
-  model 数据
-  view 视图  DOM展示
-  presenter 控制
-
-  MVVM
-  model 存储数据
-  view 显示数据
-  viewmodel  VM  
-
-  
- -->
