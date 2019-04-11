@@ -23,7 +23,7 @@
           通过v-for 循环遍历list中的item
           并通过v-bind指令将item的值和content绑定起来，
           就将item传给了ListItem组件
-          如果要在子组件中接收到item 就必须在子组件的prop中定义
+          如果要在子组件中 接收到item 就必须在子组件的prop中定义
          -->
         <list-item v-bind:content="item" v-for="item in list"></list-item>
       </ul>
@@ -33,11 +33,13 @@
   // Vue提供了一个创建全局组件的方法
   // Vue.component("ListItem",{
   //   props:[
+    //从父组件接收的内容
   //     'content'
   //   ],
   //   template:"<li>{{this.content}}</li>"
   // })
   /*局部组件*/
+  //使用局部组件需要在父组件中注册
   var ListItem = {
 
     props:['content'],

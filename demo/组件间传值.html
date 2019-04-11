@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+   
+     
+        <input type="text" v-model="inputValue"/>
+       
+        <button v-on:click="handleBtnClick">提交</button>
+        <ul>
+          <list-item 
+          v-bind:content="item" 
+          v-bind:index="index"
+          v-for="(item,index) in list"
+          @delete="handleItemDelete"></list-item>
+        </ul>
+      </div>
+
+  <script>
+    var ListItem = {
+      props:['content','index'],
+// 子组件的模板
+// v-on:click='handleItemClick'
+// 可以缩写成 @click='handleItemClick'
+// v-bind:index
+//可以缩写成 :index
+      template:"<li @click='handleItemClick'>{{this.content}}</li>",
+      methods:{
+        handleItemClick:function(){
+          // 子组件向父组件传值 传递 哪个Item要被删除  让父组件去删除
+          this.$emit('delete',this.index);
+          //this.index作为参数传递过来
+          
+          // 注册一个emit事件 通过向上一层触发事件，(冒泡？)
+          // 并在子组件的属性上 监听这个delete事件 
+        }
+      }
+    }
+    var vm = new Vue({
+      el:'#app',
+      components:{
+        ListItem:ListItem
+      },
+      data:{
+        list:[],
+        inputValue:''
+      },
+    methods:{
+        handleBtnClick:function(){
+        this.list.push(this.inputValue);
+        this.inputValue = '';
+    },
+    handleItemDelete:function(index){
+      this.list.splice(index,1)
+    }
+  }
+})
+/*
+父组件向子组件传值
+  使用v-bind指令 绑定父组件的数据 并在子组件的props的属性中接收
+*/
+  </script>
+</body>
+</html>
