@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>组件使用细节</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <counter ref="one" @change="handleChange"></counter>
+    <counter ref="two" @change="handleChange"></counter>
+    <div>
+      <!-- 求和 -->
+      {{total}}
+    </div>
+  </div>
+  
+    <!-- 
+      row是一个子组件 但是可能由于浏览器的原因或者HTML规范限制的原因
+      导致如果直接写<row></row> 会出现xiaobug 即不会挂载到正确的位置
+      这个时候就可以使用 is属性
+      使用范围 table select ul 
+     -->
+     <!-- 
+       定义data时
+      在根结点定义data  可以是对象 即 data:{ content:'hello world'}
+      但是在非根节点时，data必须是一个函数 并且返回一个对象
+      data:function(){
+        return {
+          content:'this is content'
+        }
+      }
+      为什么：让每一个子组件都拥有单独的一个数据，不会出现多个子组件互相影响
+      因为子组件不象根组件 可能会被调用多次
+      -->
+      <!-- 
+        ref 
+        用法1 
+        在标签上添加ref引用可以获取到这个标签的DOM节点
+        vue不建议我们直接操作DOM，
+        <div rel="hello">hello world</div>
+        handleDivItem:function(){
+          this.$refs.hello.innerHTML
+          //$refs 表示组件的所有的ref
+        }
+      
+        用法2  写在子组件上 获取子组件
+      -->
+  
+
+  <script>
+    Vue.component('counter',{
+      template:'<div @click="handleClick">{{number}}</div>',
+      data:function(){
+        return{
+          number:0
+        }
+      },
+      methods:{
+        handleClick:function(){
+          this.number++;
+          // 子组件向父组件传值
+          this.$emit('change')
+        }
+      }
+    })
+    var vm  = new Vue({
+      el:"#app",
+      data:{
+        total:0
+      },
+      methods:{
+        handleChange:function(){
+          this.total = this.$refs.one.number+this.$refs.two.number
+        }
+      }
+    })
+    // is属性 写table时出现的小bug
+    // 写ul 
+
+  </script>
+</body>
+</html>
