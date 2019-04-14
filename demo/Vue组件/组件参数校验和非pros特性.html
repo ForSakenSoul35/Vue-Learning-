@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <child :content="123">
+      <!-- 
+        注意:content="123"和 content="123" 写法的区别 
+        :content 这种写法  等号后跟的是一个jsx表示式 
+        content 后面是一个字符串
+      -->
+    </child>
+  </div>
+  <script>
+    Vue.component('child',{
+      template:'<div>{{content}}</div>',
+      props:{
+        // content:Number
+
+        // content:[Number,String]//要么是数字 要么是数组
+        content:{
+          type: String,
+          // required:true,//表示这个参数 必须传递
+          // default:'default value'//默认值
+          validator:function(value){
+            //自定义检验器
+            return (value.length>5)
+            //限制字符串长度
+          }
+        }
+        
+        //key为参数名，值为限制条件
+      }
+      //props 是一个数组或者数组
+      
+    })
+    var vm  = new Vue({
+      el:"#app",
+      data:{
+        content:'hello world'
+      }
+    })
+    /*
+    参数校验 指父组件向子组件传递参数  子组件势必要进行参数校验
+    */
+    /*
+    props特性 父组件传了 子组件接收了
+      可以使用插值表达式 或者this.  使用
+      不会显示在对应DOM节点上的属性里面
+    非props特性
+      1.报错  不能使用
+      2.会显示在对应DOM节点上的属性里面
+    */
+  </script>
+</body>
+</html>
