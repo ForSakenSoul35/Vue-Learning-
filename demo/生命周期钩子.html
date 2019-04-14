@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id = "app">
+    {{content}}
+  </div>
+  <script>
+    var vm = new Vue({
+      el:'#app',
+      template:'<p>hello p</p>',
+      data:{
+        content:'hello world'
+      },
+      beforeCreate:function(){
+        console.log('beforeCreate')
+      },
+      created:function(){
+        console.log('created')
+      },
+      beforeMount:function(){
+        console.log('beforeMount')
+      },
+      mounted:function(){
+        console.log('mounted')
+      }
+
+
+
+    })
+    /*
+    生命周期钩子函数：
+    Vue实例在某一个时间点会自动执行的函数
+    四个阶段：
+    1.创建Vue实例阶段
+    new Vue ->初始化事件和生命周期函数
+      beforeCreate
+    初始化 外部注入以及数据双向绑定
+      created
+      -----
+      判断Vue实例中
+        是否有el-->判断是否有template属性 如果没有-将el 外层的html作为模板
+        如果有 将使用template里面的模板 直接替换掉挂载点使用的html结构
+    2.挂载Vue实例阶段(模板与数据相结合)
+      befroeMount
+      mounted
+    3.更新Vue实例阶段
+      beforeUpdate
+      Updated
+    4.执行vm.$destroy()函数
+      beforeDestroy
+      destroyed
+    */
+  </script>
+</body>
+</html>

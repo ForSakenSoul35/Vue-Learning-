@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    {{full}}
+  </div>
+  <script>
+    var vm  = new Vue({
+      el:"#app",
+      data:{
+        content:'hello world',
+        message:'hello xhb'
+      },
+      computed:{
+        full:{
+          // 读取属性的时候调用get方法
+          get:function(){
+            return this.content+' '+this.message
+          },
+          //需要再理解set方法
+          set:function(value){
+            // 重新赋值的时候 会接收到重新赋值的value值 作为参数 
+            //定义数组接收 value 
+            var arr = value.split(" ");
+            //value 是由空格分隔开的 调用split分割数组
+            // 对content和message重新赋值
+            this.content=arr[0],
+            this.message= arr[1]
+            // 当content和message发生改变时，由于是computed属性
+            // 当依赖的数据发生改变时 会重新计算 即重新计算full的值
+            //当full的值发生改变时 页面上的值也会发生改变
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .activated{
+      color:red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" 
+    @click='handleDivClick'
+    :class="[activated]"
+    
+    >
+    <!-- 
+      :class={activated:isActivated}
+      v-bind:class 绑定 
+      class的对象绑定
+    -->
+    {{content}}
+  </div>
+  <script>
+    var vm  = new Vue({
+      el:"#app",
+      data:{
+        content:'hello world',
+        activated:""
+        // isActivated:false,
+      },
+      methods:{
+        handleDivClick:function(){
+          // this.isActivated=!this.isActivated;
+          // if(this.activated === "activated"){
+          //   this.activated = ""
+          // }else{
+          //   this.activated ="activated"
+          // }
+          this.activated = this.activated === "activated" ? " ":"activated"//三元判断
+          
+        }
+      }
+    })
+  </script>
+</body>
+</html>

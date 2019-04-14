@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    {{name}}
+  </div>
+
+  <script>
+    var vm =new Vue({
+      el:'#app',
+      data:{
+        name:'dell'
+      }
+    })
+    /*
+    模板语法
+    1.插值表达式 {{}}
+    2.v-text="name"
+    v-text的作用 是改变当前html标签的innerText属性的值为 vue实例中的data中的name属性的值
+    3.v-html="name"
+     v-html的作用 是改变当前html标签的innerHTML属性的值
+     会转义HTML标签
+    插值表达式的作用与v-text一致
+    
+    */
+    /*
+    v- 指令后面跟的都是jsx表达式
+    v-text ="name+'lee'"
+    {{name+'lee'}}
+    */
+  </script>
+</body>
+</html>
