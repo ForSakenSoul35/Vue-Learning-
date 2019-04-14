@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+      <child @click ="handleClick"></child>
+  </div>
+  <script>
+    Vue.component('child',{
+        template:'<div @click="handleItemClick">Child</div>',
+        methods:{
+          handleItemClick:function(){
+            console.log('emit')
+            this.$emit('click');
+            //向外触发click事件
+          }
+        }
+      })
+    /*
+    在自定义组件上绑定事件 
+    <child @click='handleClick'>Child</child>
+    这个绑定的是自定义事件  点击的时候不会触发
+
+    要想触发：
+    需要在子组件上的方法上 向外触发事件
+    this.$emit('click')
+    */
+    /*
+    在标签上定义事件
+    template:'<div @click="handleClick">Child</div>'
+    */
+    /*
+    自定义组件上注册事件 
+    简单的注册事件并不会触发 @click ="handleClick"
+    必须加修饰符 @click.native = "handleClick"
+    还有这种方式：
+    Vue.component = ('child',{
+      template:'<div>Child</div>',
+      methods:{
+        handleClick:function(){
+          this.$emit('click');
+        }
+      }
+    })
+    <body>
+      <child @click="handleClick"></child>
+    </body>
+    */
+    var vm = new Vue({
+        el:"#app",
+        methods:{
+          handleClick:function(){
+            alert('click') 
+          }
+        }
+      })
+    /*
+    事件绑定
+    子组件上 把事件绑定在标签上 并把方法 写在 子组件的methods里面
+        Vue.component('child',{
+      template:'<div @click="handleChildClick">Child</div>',
+      methods:{
+        handleChildClick:function(){
+          console.log('Child click')
+        }
+      }
+    
+    })
+    写在自定义组件上的方法 要想触发 需要两步
+    1.
+    <div>
+      <child @click ="handleClick"></child>
+    </div>
+    {
+      Vue.component('child',{
+        template:'<div @click ="handleItemClick">Child</div>',
+        methods:{
+          handleItemClick:function(){
+            this.$emit('click');
+            //向外触发click事件
+          }
+        }
+      })
+      vm = new Vue({
+        el:"root",
+        methods:{
+          handleClick:function(){
+            alert('click')
+          }
+        }
+      })
+    }
+
+    需要两个函数
+    执行逻辑：
+    当子组件被点击时  会监听到点击事件  向外触发一个自定义的 click 事件  
+    在自定义组件里 对这个 click事件进行监听  所以对应的handleClick事件就会被执行
+    少了这一步 
+    如果直接在自定义组件上定义自定义事件  然后在vm实例的method中调用  这样并不会执行
+     
+    解决这一步
+    还可以 对事件进行修饰 将自定义事件改为原生事件
+    在自定义组件中监听事件的时候 
+    <Child @click.native></Child>
+    */
+  </script>
+</body>
+</html>

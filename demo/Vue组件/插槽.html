@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>插槽 slot</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <child>
+      <!-- 从父组件传递 DOM结构给子组件 -->
+      <!-- 利用插槽更方便的向子组件传递DOM元素 -->
+      <p>
+        dell
+      </p>
+    </child>
+  </div>
+  <script>
+    /*
+    */
+    Vue.component('child',{
+      template:`<div>
+                  <p>{{content}}</p>
+                  <slot>默认内容</slot>
+                </div>`
+                // 可以指定默认值  在<slot></slot>中间定义
+                // 可以给插槽定义名字  具名插槽
+                // <div class="header" slot="header">header</div>
+                //  使用  <slot name="header"></slot>
+    })
+    var vm  = new Vue({
+      el:"#app",
+      data:{
+        content:'hello world'
+      }
+    })
+  </script>
+</body>
+</html>
