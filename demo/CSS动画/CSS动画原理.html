@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- 引入vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="./animate.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <!-- 实现初始动画 appear appear-active-class -->
+  <!-- 使用两种动画形式  keyframs 和transition 用type指定 动画时长以哪种形式的动画为准   -->
+  <!-- 自定义动画时长 :duration="1000" 或者 :duration="{enter:1000,leave:10000}" -->
+  <div id="app">
+    <transition >
+        <div 
+            v-if="show" 
+            name="fade"
+            appear
+            enter-active-class="animated swing"
+            leave-active-class="animated shake"
+            appear--active-class="animated swing">hello world</div>
+        <!-- 
+            可以指定vue添加的类名  使用name属性  、
+            当使用name属性时  vue自动添加的类名就会以name属性的值开头  如fade-leave-to
+        -->
+        <!-- 
+          可以自定义类名  语法 enter-active-class ="enter"
+        
+         -->
+    </transition>
+    <!-- 会自动分析css代码 -->
+    <!-- 在显示动画即将被执行的瞬间 会往内部的div上添加两个类名 fade-enter fade-enter-active -->
+    <!-- 在显示动画第一帧执行之后  到第二帧的时候  会删除fade-enter删除  添加fade-enter-to -->
+    <!-- 在显示动画结束的这一瞬间  会将fade-enter-active fade-enter-to 都删除 -->
+    <button @click ="handleClick">切换</button>
+    <!-- 在隐藏动画即将被执行的瞬间 会往内部的div上添加两个类名 fade-leave fade-leave-active -->
+    <!-- 在隐藏动画第一帧执行之后  到第二帧的时候  会删除fade-leave删除  添加fade-leave-to -->
+    <!-- 在隐藏动画结束的这一瞬间  会将fade-leave-active fade-leave-to 都删除 -->
+  </div>
+  <script>
+    var vm  = new Vue({
+      el:"#app",
+      data:{
+        show:true
+      },
+      methods:{
+        handleClick:function(){
+          this.show = !this.show
+        }
+      }
+    })
+  </script>
+</body>
+</html>
